@@ -1,0 +1,26 @@
+# Python cache and compiled files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environments (if you create one later)
+venv/
+.venv/
+env/
+
+# Local databases & logs
+*.db
+*.sqlite3
+*.log
+
+# Environment variables / API keys (for future security)
+.env
+
+# Editor & Windows OS files
+.vscode/
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# Generated screenshots (if saved inside project folder)
+RUBI_Screenshot_*.png

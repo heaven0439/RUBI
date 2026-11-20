@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>R.U.B.I. - Primary Terminal</title>
+    <!-- Google Fonts for futuristic typography -->
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700&family=Rajdhani:wght@400;500;600&display=swap" rel="stylesheet">
+    <!-- FontAwesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="dashboard-container">
+        <!-- Header -->
+        <header class="top-bar glass-panel">
+            <div class="logo">
+                <h1>R.U.B.I.</h1>
+                <span class="subtitle">Responsive Utility & Behavioral Intelligence</span>
+            </div>
+            <div class="system-status">
+                <div class="status-indicator">
+                    <span class="dot offline" id="connection-dot"></span>
+                    <span id="connection-text">SYSTEM OFFLINE</span>
+                </div>
+                <div class="time-display" id="clock">00:00:00</div>
+            </div>
+        </header>
+
+        <!-- Main Layout -->
+        <main class="main-grid">
+            <!-- Left Panel: System Monitoring -->
+            <aside class="side-panel glass-panel" id="sys-monitor">
+                <h2 class="panel-title"><i class="fas fa-microchip"></i> Diagnostics</h2>
+                
+                <div class="metric">
+                    <div class="metric-label">
+                        <span>CPU USAGE</span>
+                        <span id="cpu-val">0%</span>
+                    </div>
+                    <div class="progress-bar"><div class="progress-fill" id="cpu-bar" style="width: 0%;"></div></div>
+                </div>
+
+                <div class="metric">
+                    <div class="metric-label">
+                        <span>RAM ALLOCATION</span>
+                        <span id="ram-val">0%</span>
+                    </div>
+                    <div class="progress-bar"><div class="progress-fill" id="ram-bar" style="width: 0%;"></div></div>
+                </div>
+
+                <div class="metric">
+                    <div class="metric-label">
+                        <span>STORAGE CORE</span>
+                        <span id="storage-val">0%</span>
+                    </div>
+                    <div class="progress-bar"><div class="progress-fill" id="storage-bar" style="width: 0%;"></div></div>
+                </div>
+            </aside>
+
+            <!-- Center Panel: AI Visualizer -->
+            <section class="center-stage">
+                <div class="hologram-container" id="visualizer-container">
+                    <div class="ring ring-outer"></div>
+                    <div class="ring ring-middle"></div>
+                    <div class="ring ring-inner"></div>
+                    <div class="core-orb" id="core-orb"></div>
+                </div>
+                <div class="assistant-state" id="assistant-state">STANDBY MODE</div>
+            </section>
+
+            <!-- Right Panel: Command History -->
+            <aside class="side-panel glass-panel" id="terminal-history">
+                <h2 class="panel-title"><i class="fas fa-list"></i> Activity Log</h2>
+                <div class="log-container" id="chat-log">
+                    <div class="log-entry system">
+                        <span class="timestamp">[SYS]</span> System initialized. Awaiting backend connection.
+                    </div>
+                </div>
+            </aside>
+        </main>
+
+        <!-- Footer: Input Controls -->
+        <footer class="bottom-bar glass-panel">
+            <button class="mic-btn" id="mic-btn" title="Toggle Voice Command">
+                <i class="fas fa-microphone"></i>
+            </button>
+            <div class="input-wrapper">
+                <i class="fas fa-terminal"></i>
+                <input type="text" id="manual-input" placeholder="Enter manual override command..." autocomplete="off">
+            </div>
+            <button class="action-btn" id="send-btn">
+                <i class="fas fa-paper-plane"></i>
+            </button>
+        </footer>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

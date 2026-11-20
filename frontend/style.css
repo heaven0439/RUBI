@@ -1,0 +1,378 @@
+/* --- CSS Variables --- */
+:root {
+    --bg-dark: #07090e;
+    --cyan: #00f0ff;
+    --cyan-dim: rgba(0, 240, 255, 0.2);
+    --blue: #0055ff;
+    --alert-red: #ff2a2a;
+    --text-main: #e0f7fa;
+    --text-muted: #83a5b3;
+    --glass-bg: rgba(7, 12, 20, 0.6);
+    --glass-border: rgba(0, 240, 255, 0.15);
+    
+    --font-heading: 'Orbitron', sans-serif;
+    --font-body: 'Rajdhani', sans-serif;
+}
+
+/* --- Global Reset --- */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: var(--bg-dark);
+    color: var(--text-main);
+    font-family: var(--font-body);
+    /* FIXED: Allow scrolling if the screen is too small */
+    min-height: 100vh;
+    overflow-x: hidden;
+    overflow-y: auto; 
+    background-image: 
+        radial-gradient(circle at 50% 50%, rgba(0, 85, 255, 0.05) 0%, transparent 60%),
+        linear-gradient(rgba(0, 240, 255, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0, 240, 255, 0.03) 1px, transparent 1px);
+    background-size: 100% 100%, 30px 30px, 30px 30px;
+}
+
+.dashboard-container {
+    display: flex;
+    flex-direction: column;
+    /* FIXED: Keep it full screen, but don't crush it on small monitors */
+    height: 100vh;
+    min-height: 750px; 
+    padding: 15px;
+    gap: 15px;
+}
+
+/* --- Shared Glass Panels --- */
+.glass-panel {
+    background: var(--glass-bg);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid var(--glass-border);
+    border-radius: 8px;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5), inset 0 0 15px rgba(0, 240, 255, 0.05);
+}
+
+.panel-title {
+    font-family: var(--font-heading);
+    font-size: 1rem;
+    color: var(--cyan);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-bottom: 20px;
+    border-bottom: 1px solid var(--cyan-dim);
+    padding-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+/* --- Header --- */
+.top-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 25px;
+    height: 70px;
+    flex-shrink: 0;
+}
+
+.logo h1 {
+    font-family: var(--font-heading);
+    font-size: 2rem;
+    color: var(--text-main);
+    text-shadow: 0 0 10px var(--cyan);
+    letter-spacing: 4px;
+}
+
+.logo .subtitle {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+.system-status {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+    font-family: var(--font-heading);
+}
+
+.status-indicator {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 0.9rem;
+    letter-spacing: 1px;
+}
+
+.dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+}
+.dot.offline { background: var(--alert-red); box-shadow: 0 0 10px var(--alert-red); }
+.dot.online { background: var(--cyan); box-shadow: 0 0 10px var(--cyan); }
+
+.time-display {
+    font-size: 1.2rem;
+    color: var(--cyan);
+    text-shadow: 0 0 5px var(--cyan);
+}
+
+/* --- Main Layout Grid --- */
+.main-grid {
+    display: grid;
+    grid-template-columns: 300px 1fr 350px;
+    gap: 15px;
+    flex-grow: 1;
+    overflow: hidden;
+}
+
+.side-panel {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    /* FIXED: Prevent panel from expanding infinitely */
+    overflow: hidden; 
+}
+
+/* --- Left Panel: Metrics --- */
+.metric {
+    margin-bottom: 25px;
+}
+
+.metric-label {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    margin-bottom: 8px;
+    letter-spacing: 1px;
+}
+
+.progress-bar {
+    width: 100%;
+    height: 6px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 3px;
+    overflow: hidden;
+}
+
+.progress-fill {
+    height: 100%;
+    background: var(--cyan);
+    box-shadow: 0 0 10px var(--cyan);
+    transition: width 0.5s ease-out;
+}
+
+/* --- Center Panel: Hologram Visualizer --- */
+.center-stage {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+
+.hologram-container {
+    position: relative;
+    width: 300px;
+    height: 300px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.ring {
+    position: absolute;
+    border-radius: 50%;
+    border: 2px solid transparent;
+}
+
+.ring-outer {
+    width: 280px;
+    height: 280px;
+    border-top: 2px solid var(--cyan);
+    border-bottom: 2px solid var(--cyan);
+    animation: spin 8s linear infinite;
+    opacity: 0.5;
+}
+
+.ring-middle {
+    width: 220px;
+    height: 220px;
+    border-left: 2px dashed var(--blue);
+    border-right: 2px dashed var(--blue);
+    animation: spin-reverse 6s linear infinite;
+    opacity: 0.7;
+}
+
+.ring-inner {
+    width: 160px;
+    height: 160px;
+    border-top: 2px dotted var(--cyan);
+    animation: spin 4s linear infinite;
+}
+
+.core-orb {
+    width: 80px;
+    height: 80px;
+    background: radial-gradient(circle, var(--cyan) 10%, transparent 70%);
+    border-radius: 50%;
+    box-shadow: 0 0 30px var(--cyan);
+    opacity: 0.8;
+    transition: all 0.3s ease;
+}
+
+.core-orb.listening {
+    animation: pulse 1s infinite alternate;
+}
+
+.assistant-state {
+    margin-top: 40px;
+    font-family: var(--font-heading);
+    font-size: 1.2rem;
+    color: var(--cyan);
+    letter-spacing: 5px;
+    text-shadow: 0 0 10px var(--cyan);
+    text-align: center;
+}
+
+/* --- Right Panel: Chat Log --- */
+.log-container {
+    /* FIXED: Height 0 forces flexbox to manage the height properly, enabling scrolling */
+    flex-grow: 1;
+    height: 0; 
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding-right: 5px;
+}
+
+.log-container::-webkit-scrollbar { width: 6px; }
+.log-container::-webkit-scrollbar-track { background: transparent; }
+.log-container::-webkit-scrollbar-thumb { background: var(--cyan-dim); border-radius: 3px; }
+
+.log-entry {
+    font-size: 0.95rem;
+    line-height: 1.4;
+    padding: 8px 12px;
+    border-left: 2px solid;
+    background: rgba(0, 0, 0, 0.2);
+    /* Prevents long text from breaking the box */
+    word-wrap: break-word;
+}
+
+.log-entry.system { border-color: var(--text-muted); color: var(--text-muted); }
+.log-entry.user { border-color: var(--cyan); color: #fff; }
+.log-entry.rubi { border-color: var(--blue); color: var(--cyan); box-shadow: inset 20px 0 20px -20px var(--blue); }
+
+.timestamp {
+    font-size: 0.8rem;
+    opacity: 0.7;
+    margin-right: 8px;
+    font-family: var(--font-heading);
+}
+
+/* --- Footer: Input --- */
+.bottom-bar {
+    display: flex;
+    align-items: center;
+    padding: 10px 20px;
+    height: 70px;
+    gap: 15px;
+    flex-shrink: 0;
+}
+
+.mic-btn, .action-btn {
+    background: transparent;
+    border: 1px solid var(--cyan-dim);
+    color: var(--cyan);
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 1.2rem;
+    transition: all 0.3s ease;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-shrink: 0;
+}
+
+.mic-btn:hover, .action-btn:hover {
+    background: var(--cyan-dim);
+    box-shadow: 0 0 15px var(--cyan-dim);
+}
+
+.mic-btn.active {
+    background: var(--alert-red);
+    color: white;
+    border-color: var(--alert-red);
+    box-shadow: 0 0 15px var(--alert-red);
+}
+
+.input-wrapper {
+    flex-grow: 1;
+    display: flex;
+    align-items: center;
+    background: rgba(0, 0, 0, 0.4);
+    border: 1px solid var(--cyan-dim);
+    border-radius: 4px;
+    padding: 0 15px;
+    height: 45px;
+}
+
+.input-wrapper i {
+    color: var(--text-muted);
+    margin-right: 15px;
+}
+
+.input-wrapper input {
+    background: transparent;
+    border: none;
+    color: var(--text-main);
+    font-family: var(--font-body);
+    font-size: 1rem;
+    width: 100%;
+    outline: none;
+}
+
+.input-wrapper input::placeholder {
+    color: var(--text-muted);
+}
+
+/* --- Animations --- */
+@keyframes spin {
+    100% { transform: rotate(360deg); }
+}
+
+@keyframes spin-reverse {
+    100% { transform: rotate(-360deg); }
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); box-shadow: 0 0 20px var(--cyan); opacity: 0.8; }
+    100% { transform: scale(1.2); box-shadow: 0 0 50px var(--cyan); opacity: 1; }
+}
+
+/* --- Responsive Design for Smaller Screens --- */
+@media (max-width: 1100px) {
+    .main-grid {
+        grid-template-columns: 1fr;
+        overflow-y: auto;
+    }
+    .dashboard-container {
+        height: auto;
+        min-height: 100vh;
+    }
+    .side-panel {
+        min-height: 300px;
+    }
+}
